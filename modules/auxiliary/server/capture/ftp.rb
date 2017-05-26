@@ -30,7 +30,8 @@ class MetasploitModule < Msf::Auxiliary
 
     register_options(
       [
-        OptPort.new('SRVPORT',    [ true, "The local port to listen on.", 21 ])
+        OptPort.new('SRVPORT',    [ true, "The local port to listen on.", 21 ]),
+        OptString.new('BANNER', [false, 'The server banner to display when client connects'])
       ])
   end
 
@@ -38,7 +39,11 @@ class MetasploitModule < Msf::Auxiliary
     super
     @state = {}
   end
-
+  
+  def banner
+    datastore['BANNER'] || '220 FTP Server Ready\r\n'
+  end
+  
   def run
     print_status("Listening on #{datastore['SRVHOST']}:#{datastore['SRVPORT']}...")
     exploit()
@@ -46,7 +51,7 @@ class MetasploitModule < Msf::Auxiliary
 
   def on_client_connect(c)
     @state[c] = {:name => "#{c.peerhost}:#{c.peerport}", :ip => c.peerhost, :port => c.peerport, :user => nil, :pass => nil}
-    c.put "220 FTP Server Ready\r\n"
+    c.put "#{banner}\r\n"
   end
 
   def report_cred(opts)
