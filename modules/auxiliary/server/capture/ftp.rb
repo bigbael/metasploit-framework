@@ -31,7 +31,7 @@ class MetasploitModule < Msf::Auxiliary
     register_options(
       [
         OptPort.new('SRVPORT',    [ true, "The local port to listen on.", 21 ]),
-        OptString.new('BANNER', [false, 'The server banner to display when client connects'])
+        OptString.new('BANNER', [false, "The server banner to display when client connects"])
       ])
   end
 
