@@ -41,7 +41,7 @@ class MetasploitModule < Msf::Auxiliary
   end
   
   def banner
-    datastore['BANNER'] || '220 FTP Server Ready\r\n'
+    datastore['BANNER'] || 'FTP Server Ready'
   end
   
   def run
@@ -51,7 +51,7 @@ class MetasploitModule < Msf::Auxiliary
 
   def on_client_connect(c)
     @state[c] = {:name => "#{c.peerhost}:#{c.peerport}", :ip => c.peerhost, :port => c.peerport, :user => nil, :pass => nil}
-    c.put "#{banner}\r\n"
+    c.put "220 #{banner}\r\n"
   end
 
   def report_cred(opts)
