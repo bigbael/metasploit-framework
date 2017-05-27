@@ -41,7 +41,7 @@ class MetasploitModule < Msf::Auxiliary
   end
   
   def banner
-    datastore['BANNER'] || 'FTP Server Ready'
+    datastore['BANNER'] || "FTP Server Ready"
   end
   
   def run
